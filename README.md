@@ -189,6 +189,18 @@ Api.users();
        virtualhost_count: 0 }, ... ] }
 ```
 
+### user(id пользователя)
+
+Получить информацию о пользователе
+
+#### Ввод:
+
+```js
+Api.user(1);
+```
+
+#### Вывод:
+
 ```bash
 { data:
    { action: null,
@@ -209,15 +221,3 @@ Api.users();
      username: 'fastuser',
      virtualhost_count: 0 } }
 ```
-
-### user(id пользователя)
-
-Получить информацию о пользователе
-
-#### Ввод:
-
-```js
-Api.user(1);
-```
-
-#### Вывод:
