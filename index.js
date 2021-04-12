@@ -54,4 +54,31 @@ module.exports = class FastPanel {
 			reject(res)
 		});
 	}
+	
+	settings() {
+		return new Promise(async (resolve, reject) => {
+			const res = await this._get('api/settings');
+			if(res) resolve(res);
+			
+			reject(res)
+		});
+	}
+	
+	users() {
+		return new Promise(async (resolve, reject) => {
+			const res = await this._get('api/users');
+			if(res) resolve(res);
+			
+			reject(res)
+		});
+	}
+	
+	user(id) {
+		return new Promise(async (resolve, reject) => {
+			const res = await this._get(`api/users/${id}`);
+			if(res) resolve(res);
+			
+			reject(res)
+		});
+	}
 }
