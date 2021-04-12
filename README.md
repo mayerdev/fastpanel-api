@@ -1,7 +1,7 @@
 # fastpanel-api
 NodeJS API client for FastPanel
 
-## Example
+## Пример
 
 ```js
 const api = require('./index');
@@ -13,11 +13,11 @@ Api.auth('fastuser', 'password').then(async () => {
 });
 ```
 
-## Output
+## Вывод
 
 ```bash
 [FastPanel API by MayerDev] Got token:
-<token here>
+Здесь токен
 { data:
    { action: null,
      allowed_user_count: 0,
@@ -54,4 +54,14 @@ Api.auth('fastuser', 'password').then(async () => {
      user_creating: false,
      username: 'fastuser',
      virtualhost_count: 2 } }
+```
+
+## Методы
+
+### _get()
+
+Отправка GET запроса к API
+
+```js
+Api._get('api/me')
 ```
