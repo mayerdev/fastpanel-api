@@ -36,7 +36,7 @@ module.exports = class FastPanel {
 	
 	_post(route, data) {
 		return new Promise(async (resolve, reject) => {
-			const res = await axios.get(`${this.url}/${route}`, {
+			const res = await axios.post(`${this.url}/${route}`, data, {
 				headers: {
 					Authorization: `Bearer ${this.token}`
 				}
