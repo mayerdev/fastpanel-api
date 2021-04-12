@@ -122,6 +122,18 @@ Api.settings();
 #### Вывод:
 
 ```bash
+{ data:
+   { ips: [ [Object] ],
+     network_interface_matches: { '10.130.0.19': [Array] },
+     configuration:
+      { 'ai-bolit': [Object],
+        awstats: [Object],
+        backup: [Object],
+        bind9: [Object],
+        composer: [Object],
+        databases: [Object],
+        email: [Object],
+        fail2ban: [Object],
         ftp: [Object],
         git: [Object],
         jpegoptim: [Object],
