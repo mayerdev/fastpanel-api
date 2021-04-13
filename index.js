@@ -46,6 +46,18 @@ module.exports = class FastPanel {
 		});
 	}
 	
+	_delete(route) {
+		return new Promise(async (resolve, reject) => {
+			const res = await axios.delete(`${this.url}/${route}`, {
+				headers: {
+					Authorization: `Bearer ${this.token}`
+				}
+			});
+			
+			resolve(res.data);
+		});
+	}
+	
 	me() {
 		return new Promise(async (resolve, reject) => {
 			const res = await this._get('api/me');
