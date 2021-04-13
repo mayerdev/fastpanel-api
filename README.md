@@ -233,3 +233,242 @@ Api.user(1);
      username: 'fastuser',
      virtualhost_count: 0 } }
 ```
+
+### domains()
+
+Получить список DNS-доменов
+
+#### Ввод:
+
+```js
+Api.domains();
+```
+
+#### Вывод:
+
+```bash
+{ data:
+   [ { id: 1,
+       owner_id: 5,
+       owner: [Object],
+       virtualhost_id: 2,
+       certificate: null,
+       name: 'billing.mayerdev.com',
+       fallback: '',
+       ips: [Array],
+       mail_to: 'local',
+       dkim: true,
+       use_for_emails: true,
+       ns: null,
+       share: false,
+       default: false,
+       source: 'client',
+       delegated_to: null,
+       is_delegated: true,
+       action: null,
+       created_at: '2021-04-12T06:46:31.59321267Z',
+       updated_at: '2021-04-12T06:46:32.544513189Z' }, ... ] }
+```
+
+### domain(id домена)
+
+Получить список DNS-записей домена
+
+#### Ввод:
+
+```js
+Api.domain(1);
+```
+
+#### Вывод:
+
+```bash
+{ data:
+   [ { id: 1,
+       domain_id: 1,
+       action: null,
+       name: 'billing.mayerdev.com.',
+       type: 'A',
+       hash: '...',
+       email: '',
+       content: '84.201.***.***',
+       hidden: false,
+       ttl: 0,
+       priority: 0,
+       weight: 0,
+       port: 0 },
+     { id: 2,
+       domain_id: 1,
+       action: null,
+       name: 'www.billing.mayerdev.com.',
+       type: 'A',
+       hash: '...',
+       email: '',
+       content: '84.201.***.***',
+       hidden: false,
+       ttl: 0,
+       priority: 0,
+       weight: 0,
+       port: 0 },
+     { id: 3,
+       domain_id: 1,
+       action: null,
+       name: 'mail.billing.mayerdev.com.',
+       type: 'A',
+       hash: '...',
+       email: '',
+       content: '84.201.***.***',
+       hidden: false,
+       ttl: 0,
+       priority: 0,
+       weight: 0,
+       port: 0 }, ... ] }
+```
+
+### sites(максимальное количество, по умолчанию 30)
+
+Получить список сайтов
+
+#### Ввод:
+
+```js
+Api.sites(1);
+```
+
+#### Вывод:
+
+```bash
+{ data:
+   [ { access_log: true,
+       action: null,
+       admin_email: 'admin@mayerdev.com',
+       aliases: [Array],
+       autosubdomains: false,
+       awstats: false,
+       backups: [],
+       charset: 'UTF-8',
+       created_at: '2021-04-11 07:38:21',
+       databases_size: 0,
+       domain: 'mayerdev.com',
+       enabled: true,
+       error_count: 1,
+       error_log: true,
+       expired: 0,
+       fpm_workers_count: 2,
+       generate_user: false,
+       gzip: true,
+       gzip_comp_level: 1,
+       hsts: false,
+       http2: false,
+       id: 1,
+       index_dir: '/var/www/fastuser/data/www/mayerdev.com',
+       index_page: 'index.php index.html',
+       ips: [],
+       is_scan_failed: false,
+       log_period: 'daily',
+       main_domain: null,
+       manual_changes: true,
+       mode: 'php_fpm',
+       owner: [Object],
+       php: true,
+       php_version: 71,
+       port: 80,
+       redirect_to_https: false,
+       rotate: 10,
+       scan_status: false,
+       settings: [Object],
+       size: 0,
+       ssi: '',
+       ssi_value: '',
+       static_extension:
+	'jpg,jpeg,gif,png,svg,js,css,mp3,ogg,mpeg,avi,zip,gz,bz2,rar,swf,ico,7z,doc,docx,map,ogg,otf,pdf,tff,tif,txt,wav,
+	webp,woff,woff2,xls,xlsx,xml',
+       static_file_handler: true,
+       status: 200,
+       sub_directory: '',
+       temp_link_flag: true,
+       update_state_date: '0001-01-01T00:00:00Z' } ],
+  meta:
+   { counts:
+      { all: 3,
+        scan_status: 0,
+        not_available: 0,
+        certificate_expires: 0,
+        certificate_expired: 0,
+        error: 3,
+        frozen: 0,
+        no_backup: 3,
+        disabled: 0,
+        query_count: 0 } } }
+```
+
+### site(id сайта)
+
+Получить информацию о сайте
+
+#### Ввод:
+
+```js
+Api.site(1);
+```
+
+#### Вывод:
+
+```bash
+{ data:
+   { access_log: true,
+     action: null,
+     admin_email: 'admin@mayerdev.com',
+     aliases: [ [Object] ],
+     autosubdomains: false,
+     awstats: false,
+     backups: [],
+     charset: 'UTF-8',
+     created_at: '2021-04-11 07:38:21',
+     databases_size: 0,
+     domain: 'mayerdev.com',
+     enabled: true,
+     error_count: 1,
+     error_log: true,
+     expired: 0,
+     fpm_workers_count: 2,
+     generate_user: false,
+     gzip: true,
+     gzip_comp_level: 1,
+     hsts: false,
+     http2: false,
+     id: 1,
+     index_dir: '/var/www/fastuser/data/www/mayerdev.com',
+     index_page: 'index.php index.html',
+     ips: [ [Object] ],
+     is_scan_failed: false,
+     log_period: 'daily',
+     main_domain: null,
+     manual_changes: true,
+     mode: 'php_fpm',
+     owner: { id: 1, username: 'fastuser' },
+     php: true,
+     php_version: 71,
+     port: 80,
+     redirect_to_https: false,
+     rotate: 10,
+     scan_status: false,
+     settings:
+      { burst: 1,
+        burst_flag: false,
+        no_delay: false,
+        req_limit: false,
+        req_limit_rate: 'second',
+	req_limit_value: 1 },
+     size: 0,
+     ssi: '',
+     ssi_value: '',
+     static_extension:
+      'jpg,jpeg,gif,png,svg,js,css,mp3,ogg,mpeg,avi,zip,gz,bz2,rar,swf,ico,7z,doc,docx,map,ogg,otf,pdf,tff,tif,txt,wav,we
+	bp,woff,woff2,xls,xlsx,xml',
+     static_file_handler: true,
+     status: 200,
+     sub_directory: '',
+     temp_link_flag: true,
+     update_state_date: '0001-01-01T00:00:00Z' } }
+```
