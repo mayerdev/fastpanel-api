@@ -1,10 +1,14 @@
 # fastpanel-api
 NodeJS API client for FastPanel
 
+## Установка
+
+> npm install fastpanel-api -s
+
 ## Пример
 
 ```js
-const api = require('./index');
+const api = require('fastpanel-api');
 
 const Api = new api('https://cp.mayerdev.com');
 
