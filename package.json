@@ -1,12 +1,14 @@
 {
   "name": "fastpanel-api",
-  "version": "1.0.0",
+  "version": "0.0.5",
   "description": "FastPanel API by MayerDev",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Artem Lomakin <mayer.dev@yahoo.com>",
+  "homepage": "https://mayerdev.com",
+  "repository": "https://github.com/mayerdev/fastpanel-api",
   "license": "MIT",
   "dependencies": {
     "axios": "^0.21.1"
