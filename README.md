@@ -472,3 +472,114 @@ Api.site(1);
      temp_link_flag: true,
      update_state_date: '0001-01-01T00:00:00Z' } }
 ```
+
+### createUser(Данные пользователя)
+
+Создать пользователя
+
+#### Ввод для создания пользователя:
+
+```js
+Api.createUser({
+	username: 'test', // логин
+	password: 'qwer12345', // пароль
+	role: 'user', // группа пользователя
+	sites: 1 // количество разрешённых сайтов
+});
+```
+
+#### Ввод для создания реселлера:
+
+```js
+Api.createUser({
+	username: 'test', // логин
+	password: 'qwer12345', // пароль
+	role: 'reseller', // группа пользователя
+	sites: 1, // количество разрешённых сайтов
+	users: 1, // количество разрешённых пользователей
+	create: true // может ли создавать пользователей
+});
+```
+
+#### Вывод после создания пользователя:
+
+```bash
+{ data:
+   { action: 'CREATING',
+     allowed_user_count: 0,
+     allowed_virtualhost_count: 1,
+     avail_virtualhost_count: 0,
+     created_at: '2021-04-13T08:13:24.979798169Z',
+     enabled: true,
+     home_dir: '/var/www/test/data',
+     id: 16,
+     owner: { id: 1, username: 'fastuser' },
+     php_version: null,
+     quota: null,
+     reseller_creating: false,
+     restore_email: '',
+     roles: [ 'ROLE_USER' ],
+     sites_allocated: 0,
+     user_creating: false,
+     username: 'test',
+     virtualhost_count: 0 } }
+```
+
+
+#### Вывод после создания реселлера:
+
+```bash
+{ data:
+   { action: 'CREATING',
+     allowed_user_count: 1,
+     allowed_virtualhost_count: 1,
+     avail_virtualhost_count: 0,
+     created_at: '2021-04-13T08:16:15.445354444Z',
+     enabled: true,
+     home_dir: '/var/www/test/data',
+     id: 17,
+     owner: { id: 1, username: 'fastuser' },
+     php_version: null,
+     quota: null,
+     reseller_creating: false,
+     restore_email: '',
+     roles: [ 'ROLE_RESELLER_ADMIN' ],
+     sites_allocated: 0,
+     user_creating: true,
+     username: 'test',
+     virtualhost_count: 0 } }
+```
+
+### deleteUser(id пользователя)
+
+Удаляет пользователя
+
+#### Ввод:
+
+```js
+Api.deleteUser(16);
+```
+
+#### Вывод:
+
+```bash
+{ data:
+   { action: 'DELETING',
+     allowed_user_count: 0,
+     allowed_virtualhost_count: 1,
+     avail_virtualhost_count: 0,
+     created_at: '2021-04-13T08:13:24.979798169Z',
+     enabled: true,
+     home_dir: '/var/www/test/data',
+     id: 16,
+     owner: { id: 1, username: 'fastuser' },
+     php_version: null,
+     quota: null,
+     reseller_creating: false,
+     restore_email: '',
+     roles: [ 'ROLE_USER' ],
+     sites_allocated: 0,
+     user_creating: false,
+     username: 'test',
+     virtualhost_count: 0 } }
+```
