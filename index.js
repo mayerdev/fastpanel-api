@@ -81,4 +81,40 @@ module.exports = class FastPanel {
 			reject(res)
 		});
 	}
+	
+	domains() {
+		return new Promise(async (resolve, reject) => {
+			const res = await this._get('api/dns/domains');
+			if(res) resolve(res);
+			
+			reject(res)
+		});
+	}
+	
+	domain(id) {
+		return new Promise(async (resolve, reject) => {
+			const res = await this._get(`api/dns/domain/${id}/records`);
+			if(res) resolve(res);
+			
+			reject(res)
+		});
+	}
+	
+	sites(limit = 30) {
+		return new Promise(async (resolve, reject) => {
+			const res = await this._get(`api/sites/list?filter[limit]=${limit}&filter[type]=all&filter[offset]=0`);
+			if(res) resolve(res);
+			
+			reject(res)
+		});
+	}
+	
+	site(id) {
+		return new Promise(async (resolve, reject) => {
+			const res = await this._get(`api/sites/${id}`);
+			if(res) resolve(res);
+			
+			reject(res)
+		});
+	}
 }
