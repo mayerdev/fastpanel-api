@@ -117,4 +117,38 @@ module.exports = class FastPanel {
 			reject(res)
 		});
 	}
+	
+	createUser(data) {		
+		return new Promise(async (resolve, reject) => {
+			const res = await this._post('api/users', data.role === 'user' ? {
+				fpuser: {
+					username: data.username,
+					password: data.password,
+					roles: this.roles[data.role],
+					allowed_virtualhost_count: data.sites,
+				}
+			} : {
+				fpuser: {
+					username: data.username,
+					password: data.password,
+					roles: this.roles[data.role],
+					allowed_virtualhost_count: data.sites,
+					allowed_user_count: data.create ? data.users : 0,
+					user_creating: data.create
+				}
+			});
+			if(res) resolve(res);
+			
+			reject(res)
+		});
+	}
+	
+	deleteUser(id) {
+		return new Promise(async (resolve, reject) => {
+			const res = await this._delete(`api/users/${id}`);
+			if(res) resolve(res);
+			
+			reject(res)
+		});
+	}
 }
