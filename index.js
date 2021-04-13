@@ -3,6 +3,10 @@ const axios = require('axios');
 module.exports = class FastPanel {
 	constructor(url) {
 		this.url = url;
+		this.roles = {
+			user: 'ROLE_USER',
+			reseller: 'ROLE_RESELLER_ADMIN'
+		}
 	}
 	
 	auth(username, password) {
