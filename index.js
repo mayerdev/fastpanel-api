@@ -5,7 +5,8 @@ module.exports = class FastPanel {
 		this.url = url;
 		this.roles = {
 			user: 'ROLE_USER',
-			reseller: 'ROLE_RESELLER_ADMIN'
+			reseller: 'ROLE_RESELLER_ADMIN',
+			admin: 'ROLE_SUPER_ADMIN'
 		}
 	}
 	
