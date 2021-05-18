@@ -63,6 +63,18 @@ module.exports = class FastPanel {
 		});
 	}
 	
+	_put(route, data) {
+		return new Promise(async (resolve, reject) => {
+			const res = await axios.post(`${this.url}/${route}`, data, {
+				headers: {
+					Authorization: `Bearer ${this.token}`
+				}
+			});
+			
+			resolve(res.data);
+		});
+	}
+	
 	me() {
 		return new Promise(async (resolve, reject) => {
 			const res = await this._get('api/me');
@@ -163,6 +175,34 @@ module.exports = class FastPanel {
 	deleteUser(id) {
 		return new Promise(async (resolve, reject) => {
 			const res = await this._delete(`api/users/${id}`);
+			if(res) resolve(res);
+			
+			reject(res)
+		});
+	}
+	
+	pauseUser(id, data) {		
+		return new Promise(async (resolve, reject) => {
+			const res = await this._post(`api/users/${id}/status`, {
+				fpuser: {
+					enabled: false
+				}
+			});
+			
+			if(res) resolve(res);
+			
+			reject(res)
+		});
+	}
+	
+	unpauseUser(id, data) {		
+		return new Promise(async (resolve, reject) => {
+			const res = await this._post(`api/users/${id}/status`, {
+				fpuser: {
+					enabled: true
+				}
+			});
+			
 			if(res) resolve(res);
 			
 			reject(res)
