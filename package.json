@@ -1,6 +1,6 @@
 {
   "name": "fastpanel-api",
-  "version": "0.0.5",
+  "version": "0.0.7",
   "description": "FastPanel API by MayerDev",
   "main": "index.js",
   "scripts": {
