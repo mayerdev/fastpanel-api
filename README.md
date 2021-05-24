@@ -197,5 +197,5 @@ Api.pauseUser(16);
 #### Использование:
 
 ```js
-Api.pauseUser(16);
+Api.unpauseUser(16);
 ```
