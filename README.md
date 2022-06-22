@@ -1,4 +1,7 @@
 # fastpanel-api
+# Репозиторий больше неактуален, FastPanel обновили API, а мне лень обновлять клиент.
+# Если кто-то это хочет сделать, то Pull Request в помощь.
+# Мои контакты, если есть вопросы: https://t.me/mayerdevtg https://vk.com/nehoster
 NodeJS API client for FastPanel
 
 ## Установка
