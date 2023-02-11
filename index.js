@@ -1,211 +1,118 @@
 const axios = require('axios');
 
-module.exports = class FastPanel {
-	constructor(url) {
-		this.url = url;
-		this.roles = {
-			user: 'ROLE_USER',
-			reseller: 'ROLE_RESELLER_ADMIN',
-			admin: 'ROLE_SUPER_ADMIN'
-		}
-	}
-	
-	auth(username, password) {
-		return new Promise(async (resolve, reject) => {
-			const res = await axios.post(`${this.url}/login`, { username, password });
+class FastPanel {
+  roles = {
+    user: 'ROLE_USER',
+    reseller: 'ROLE_RESELLER_ADMIN',
+    admin: 'ROLE_SUPER_ADMIN'
+  }
 
-			if(!res.data.token) {
-				console.log('[FastPanel API by MayerDev] Username or password incorrect');
-				reject();
-			}
+  constructor(url) {
+    this.url = url;
+  }
 
-			console.log('[FastPanel API by MayerDev] Got token:');
-			console.log(res.data.token);
+  async auth(username, password) {
+    try {
+      const res = await axios.post(`${this.url}/login`, { username, password });
+      this.token = res.data.token;
+      console.log('[FastPanel API by MayerDev] Got token:');
+      console.log(this.token);
+      return true;
+    } catch (error) {
+      console.log('[FastPanel API by MayerDev] Username or password incorrect');
+      throw error;
+    }
+  }
 
-			this.token = res.data.token;
-			resolve();
-		});
-	}
-	
-	_get(route) {
-		return new Promise(async (resolve, reject) => {
-			const res = await axios.get(`${this.url}/${route}`, {
-				headers: {
-					Authorization: `Bearer ${this.token}`
-				}
-			});
-			
-			resolve(res.data);
-		});
-	}
-	
-	_post(route, data) {
-		return new Promise(async (resolve, reject) => {
-			const res = await axios.post(`${this.url}/${route}`, data, {
-				headers: {
-					Authorization: `Bearer ${this.token}`
-				}
-			});
-			
-			resolve(res.data);
-		});
-	}
-	
-	_delete(route) {
-		return new Promise(async (resolve, reject) => {
-			const res = await axios.delete(`${this.url}/${route}`, {
-				headers: {
-					Authorization: `Bearer ${this.token}`
-				}
-			});
-			
-			resolve(res.data);
-		});
-	}
-	
-	_put(route, data) {
-		return new Promise(async (resolve, reject) => {
-			const res = await axios.post(`${this.url}/${route}`, data, {
-				headers: {
-					Authorization: `Bearer ${this.token}`
-				}
-			});
-			
-			resolve(res.data);
-		});
-	}
-	
-	me() {
-		return new Promise(async (resolve, reject) => {
-			const res = await this._get('api/me');
-			if(res) resolve(res);
-			
-			reject(res)
-		});
-	}
-	
-	settings() {
-		return new Promise(async (resolve, reject) => {
-			const res = await this._get('api/settings');
-			if(res) resolve(res);
-			
-			reject(res)
-		});
-	}
-	
-	users() {
-		return new Promise(async (resolve, reject) => {
-			const res = await this._get('api/users');
-			if(res) resolve(res);
-			
-			reject(res)
-		});
-	}
-	
-	user(id) {
-		return new Promise(async (resolve, reject) => {
-			const res = await this._get(`api/users/${id}`);
-			if(res) resolve(res);
-			
-			reject(res)
-		});
-	}
-	
-	domains() {
-		return new Promise(async (resolve, reject) => {
-			const res = await this._get('api/dns/domains');
-			if(res) resolve(res);
-			
-			reject(res)
-		});
-	}
-	
-	domain(id) {
-		return new Promise(async (resolve, reject) => {
-			const res = await this._get(`api/dns/domain/${id}/records`);
-			if(res) resolve(res);
-			
-			reject(res)
-		});
-	}
-	
-	sites(limit = 30) {
-		return new Promise(async (resolve, reject) => {
-			const res = await this._get(`api/sites/list?filter[limit]=${limit}&filter[type]=all&filter[offset]=0`);
-			if(res) resolve(res);
-			
-			reject(res)
-		});
-	}
-	
-	site(id) {
-		return new Promise(async (resolve, reject) => {
-			const res = await this._get(`api/sites/${id}`);
-			if(res) resolve(res);
-			
-			reject(res)
-		});
-	}
-	
-	createUser(data) {		
-		return new Promise(async (resolve, reject) => {
-			const res = await this._post('api/users', data.role === 'user' ? {
-				fpuser: {
-					username: data.username,
-					password: data.password,
-					roles: this.roles[data.role],
-					allowed_virtualhost_count: data.sites,
-				}
-			} : {
-				fpuser: {
-					username: data.username,
-					password: data.password,
-					roles: this.roles[data.role],
-					allowed_virtualhost_count: data.sites,
-					allowed_user_count: data.create ? data.users : 0,
-					user_creating: data.create
-				}
-			});
-			if(res) resolve(res);
-			
-			reject(res)
-		});
-	}
-	
-	deleteUser(id) {
-		return new Promise(async (resolve, reject) => {
-			const res = await this._delete(`api/users/${id}`);
-			if(res) resolve(res);
-			
-			reject(res)
-		});
-	}
-	
-	pauseUser(id, data) {		
-		return new Promise(async (resolve, reject) => {
-			const res = await this._post(`api/users/${id}/status`, {
-				fpuser: {
-					enabled: false
-				}
-			});
-			
-			if(res) resolve(res);
-			
-			reject(res)
-		});
-	}
-	
-	unpauseUser(id, data) {		
-		return new Promise(async (resolve, reject) => {
-			const res = await this._post(`api/users/${id}/status`, {
-				fpuser: {
-					enabled: true
-				}
-			});
-			
-			if(res) resolve(res);
-			
-			reject(res)
-		});
-	}
+  async _request(method, route, data) {
+    try {
+      const res = await axios({
+        method,
+        url: `${this.url}/${route}`,
+        data,
+        headers: {
+          Authorization: `Bearer ${this.token}`
+        }
+      });
+      return res.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async me() {
+    return this._request('get', 'api/me');
+  }
+
+  async settings() {
+    return this._request('get', 'api/settings');
+  }
+
+  async users() {
+    return this._request('get', 'api/users');
+  }
+
+  async user(id) {
+    return this._request('get', `api/users/${id}`);
+  }
+
+  async domains() {
+    return this._request('get', 'api/dns/domains');
+  }
+
+  async domain(id) {
+    return this._request('get', `api/dns/domain/${id}/records`);
+  }
+
+  async sites(limit = 30) {
+    return this._request('get', `api/sites/list?filter[limit]=${limit}&filter[type]=all&filter[offset]=0`);
+  }
+
+  async site(id) {
+    return this._request('get', `api/sites/${id}`);
+  }
+
+  async createUser(data) {
+    const payload = data.role === 'user' ? {
+      fpuser: {
+        username: data.username,
+        password: data.password,
+        roles: this.roles[data.role],
+        allowed_virtualhost_count: data.sites,
+      }
+    } : {
+      fpuser: {
+        username: data.username,
+        password: data.password,
+        roles: this.roles[data.role],
+        allowed_virtualhost_count: data.sites,
+        allowed_user_count: data.create ? data.users : 0,
+        user_creating: data.create
+      }
+    };
+
+    return this._request('post', 'api/users', payload);
+  }
+
+  async deleteUser(id) {
+    return this._request('delete', `api/users/${id}`);
+  }
+
+  async pauseUser(id) {
+    return this._request('post', `api/users/${id}/status`, {
+      fpuser: {
+        enabled: false
+      }
+    });
+  }
+
+  async unpauseUser(id) {
+    return this._request('post', `api/users/${id}/status`, {
+      fpuser: {
+        enabled: true
+      }
+    });
+  }
 }
+
+module.exports = FastPanel;
